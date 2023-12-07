@@ -9,7 +9,6 @@ interface LongLat {
 export default function Home() {
 	const [value, setValue] = useState(null)
 	const [longLat, setLongLat] = useState<LongLat | null>(null)
-	const api_key = 'AIzaSyATXsneZIOZjpcf2072D6JtErU1QH4-_WY'
 
 	async function getLongLat() {
 		try {
@@ -19,7 +18,8 @@ export default function Home() {
 				'https://maps.googleapis.com/maps/api/geocode/json?place_id=' +
 				place_id +
 				'&key=' +
-				api_key
+				process.env.GOOGLE_API_KEY
+			console.log(geoUrl)
 			const response = await fetch(geoUrl)
 			const data = await response.json()
 			console.log(data.results[0].geometry.location)
@@ -37,7 +37,7 @@ export default function Home() {
 			'&location.longitude=' +
 			longLat?.lng +
 			'&requiredQuality=HIGH&key=' +
-			api_key
+			process.env.GOOGLE_API_KEY
 		const response = await fetch(solarUrl)
 		const data = await response.json()
 		console.log(data)
